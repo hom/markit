@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Markit</title>
+  <script src="https://cdn.bootcss.com/marked/0.7.0/marked.min.js"></script>
+  <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+  <link href="https://cdn.bootcss.com/github-markdown-css/3.0.1/github-markdown.min.css" rel="stylesheet">
+  <style>
+    .markdown-body {
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 45px;
+    }
+
+    @media (max-width: 767px) {
+      .markdown-body {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <article class="markdown-body"></article>
+</body>
+</html>
+
+<script>
+  (async () => {
+    // get from github
+    let rawMarkdownText;
+    try {
+      rawMarkdownText = await axios.get('https://raw.githubusercontent.com/wangzheng0822/algo/master/README.md')
+    } catch (error) {
+      return console.error(error);
+    }
+
+    console.log(rawMarkdownText.data);
+
+    let githubStyleMarkdownHtml;
+    try {
+      githubStyleMarkdownHtml = await axios.post('https://api.github.com/markdown', {
+        text: rawMarkdownText.data,
+        mode: 'gfm',
+        context: 'wangzheng0822/algo'
+      })
+    } catch (error) {
+      return console.error(error);
+    }
+
+    console.log(githubStyleMarkdownHtml.data);
+    document.getElementsByClassName('markdown-body')[0].innerHTML = githubStyleMarkdownHtml.data;
+  })()
+</script>

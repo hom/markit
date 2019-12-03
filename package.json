@@ -1,0 +1,9 @@
+{
+  "name": "markit",
+  "version": "1.0.0",
+  "description": "Mark markdown file by using github markdown style",
+  "main": "index.js",
+  "repository": "git@github.com:hom/markit.git",
+  "author": "mengj <813935532@qq.com>",
+  "license": "MIT"
+}

@@ -40,20 +40,6 @@
       return console.error(error);
     }
 
-    console.log(rawMarkdownText.data);
-
-    let githubStyleMarkdownHtml;
-    try {
-      githubStyleMarkdownHtml = await axios.post('https://api.github.com/markdown', {
-        text: rawMarkdownText.data,
-        mode: 'gfm',
-        context: 'wangzheng0822/algo'
-      })
-    } catch (error) {
-      return console.error(error);
-    }
-
-    console.log(githubStyleMarkdownHtml.data);
-    document.getElementsByClassName('markdown-body')[0].innerHTML = githubStyleMarkdownHtml.data;
+    document.getElementsByClassName('markdown-body')[0].innerHTML = marked(rawMarkdownText.data);
   })()
 </script>
